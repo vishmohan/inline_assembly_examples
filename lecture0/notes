@@ -1,0 +1,28 @@
+Inline assembly
+---------------
+1. A method of embedding assembly code in C/C++ programs.
+2. The assembly code is placed within the 'asm' construct.
+3. The inline assembly code will use the At&T syntax.
+4. Use g++ to build your C++/assembly code.
+
+Simple ASM format:
+=====================
+(i)  asm(" your assembly code\n");
+(ii) asm volatile(" your assembly code\n");
+
+Extended ASM format:
+=======================
+ asm volatile("<your assembly code>" 
+					  :<outputlist>
+					  :<inputlist>
+					  :<clobberlist>
+    		 );
+
+
+6. Examples:
+
+Example 0 - 
+(a) Initialize a GLOBAL variable in your program to 0.
+(b) Move a value of 5 to the variable.
+(c) Display the new value of the variable.
+

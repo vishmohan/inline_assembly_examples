@@ -1,0 +1,11 @@
+To find the string length:
+
+(0) Save the starting address of the string (address of the first byte)
+(1) Find the address of null byte (address of the last byte)
+(2) length = address_of_the_last_byte - address_of_the_first_byte
+
+x86 instruction:
+(1) use the scan string instruction, mnemonic : scas(b|w|d|q)
+(2) we will use the byte version - scasb
+(3) use the 'repne' prefix with scasb to perform the task until the null byte is found.
+ 
