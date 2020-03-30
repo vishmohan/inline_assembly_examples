@@ -1,0 +1,32 @@
+
+Before executing rep movsb:
+
+		0|		1|		2|		3|		4|		5 |
+--------------------------------------------------
+src		p|		r|		i|		s|		m|		\0| --> address in esi
+--------------------------------------------------
+dest     |       |       |       |       |        | --> address in edi
+--------------------------------------------------
+													--> number_of_bytes to copy in ecx = 6
+
+
+
+(1) Use the movsb instruction (use the byte version) 
+(2) Load esi/rsi with the starting address of src string.
+(3) Load edi/rdi with the starting address of dest string.
+(4) Load ecx/rcx with the number of bytes to copy.
+(5) Use the movsb instruction with the rep prefix.
+    --> rep movsb copies one byte from the src string into destination string.
+    --> It then decrements ecx and if ecx!=0 repeats the copying operation 
+		on the next byte.
+	--> It terminates when ecx=0 ie; when the all bytes have been copied.
+
+After executing rep movsb:
+
+		0|		1|		2|		3|		4|		5 |
+---------------------------------------------------
+src		p|		r|		i|		s|		m|		\0| esi = address_of_src + 6
+--------------------------------------------------
+dest    p|      r|      i|      s|      m|      \0| edi = address_of_dest + 6
+--------------------------------------------------
+													--> ecx = 0
