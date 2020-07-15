@@ -1,0 +1,88 @@
+x87 FPU data registers:
+======================
+0. FPU data registers are eight in number. 80 bits in width. 
+	- Implemented as a stack. 
+    
+1. The FPU instructions accordingly access them with the stack notation: 
+	- Top of fpu stack is  the register st(0).
+    - The next to top register is st(1) and next to that is st(2) and so on. 
+
+TOS = Top of stack
+
+1. Instruction 1: 
+	
+double radius = 1.2;
+asm volatile ("fldl %0" ::"m"(radius));
+           
+Load 1.2 : %st(0) points to FPR5 which contains 1.2                 
+
+   			------
+  FPR7	   |      | %st(2)
+		    ------
+  FPR6	   |      | %st(1)
+		    ------
+  FPR5	   | 1.2  | <-- TOS %st(0)
+		    ------
+  FPR4	   |      |
+		    ------
+  FPR3	   |      |
+		    ------
+  FPR2	   |      |
+		    ------
+  FPR1	   |      |
+		    ------
+  FPR0	   |      |
+		    ------
+
+           
+
+
+2. Instruction 2: 
+
+double value = 3.4;
+asm volatile ("fldl %0" ::"m"(value));
+
+Load 3.4 : %st(0) points to FPR4 which contains 3.4                   
+
+   			------
+  FPR7	   |      | %st(3)
+		    ------
+  FPR6	   |      | %st(2)
+		    ------
+  FPR5	   | 1.2  | %st(1)
+		    ------
+  FPR4	   | 3.4  | <-- TOS %st(0)
+		    ------
+  FPR3	   |      |
+		    ------
+  FPR2	   |      |
+		    ------
+  FPR1	   |      |
+		    ------
+  FPR0	   |      |
+		    ------
+
+3. Instruction 3: Multiply radius and value:
+
+	3.4 * 1.2 = 4.08
+
+asm volatile("fmul %st(1), %st(0)\n");
+
+
+   			------
+  FPR7	   |      | %st(3)
+		    ------
+  FPR6	   |      | %st(2)
+		    ------
+  FPR5	   | 1.2  | %st(1)
+		    ------
+  FPR4	   | 4.08 | <-- TOS %st(0)
+		    ------
+  FPR3	   |      |
+		    ------
+  FPR2	   |      |
+		    ------
+  FPR1	   |      |
+		    ------
+  FPR0	   |      |
+		    ------
