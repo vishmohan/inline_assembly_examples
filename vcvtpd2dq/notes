@@ -1,0 +1,70 @@
+CPUID feature flag required: AVX
+
+int i_array[4] = {0};
+
+double d_array[] = {17.89, 34.53, 41.21, 3.19};
+
+Initial State:
+==============
+
+         -----------------------------------
+i_array  |        |       |       |         |
+	   	 |  0     |   0   |  0    |   0     |
+	     -----------------------------------
+	   127        96    64       32         0
+	          |	   	   |		|  	    |
+	          |        |        |       |--> [0]
+              |-->[3]  |-->[2]  |-->[1]
+
+
+       	 -----------------------------------
+d_array  |        |       |       |         |
+	   	 |  3.19  | 41.21 | 34.53 |   17.89 |
+	      -----------------------------------
+	  255       192       128    64         0
+		     |	   	   |		|  	  |
+		     |         |        |     |--> [0]
+     	     |-->[3]   |-->[2]  |-->[1]
+
+
+						 |	
+						 | 
+						 V  vcvtpd2dq 
+
+         ------------------------------------
+xmm0     |        |       |       |          |
+	   	 |  3     |   41  |  34   |   17     |
+	     ------------------------------------
+	   127        96       64       32        0
+
+
+					     |
+						 |
+						 V   after vmovdqu
+
+         -----------------------------------
+i_array  |        |       |       |         |
+	   	 |  3     |   41  |  34   |   17    |
+	     -----------------------------------
+	   127        96       64       32        0
+	          |	   	   |		|  	    |
+	          |        |        |       |--> [0]
+              |-->[3]  |-->[2]  |-->[1]
+
+
+
+1. CVTPD2DQ — Convert Packed Double-Precision Floating-Point Values to Packed Doubleword
+Integers
+
+VCVTPD2DQ xmm1, xmm2/m128 --> xmm/m128 flavor (converts 2 packed doubles to 2 ints)
+VCVTPD2DQ xmm1, ymm2/m256 --> ymm/m256 flavor (converts 4 packed doubles to 4 ints)
+
+
+
+2.MOVDQU- Move Unaligned Packed Integer Values
+
+(a) MOVDQU xmm2/m128, xmm1 - Move unaligned packed integer values from xmm1 to xmm2/m128.
+      ----> requires SSE2
+
+(b) VMOVDQU xmm2/m128, xmm1 -  Move unaligned packed integer values from xmm1 to xmm2/m128.
+      ----> requires avx
