@@ -104,14 +104,14 @@ inline void display_fp_env(myfpenv* fpenvptr, string info)
 {
 	double fpr_register = 0.0;
 
-	/*cout << "fpcw "   << info << " = " << std::hex << fpenvptr->fpcw << endl;
+	cout << "fpcw "   << info << " = " << std::hex << fpenvptr->fpcw << endl;
 	cout << "fpsw "   << info << " = " << std::hex << fpenvptr->fpsw << endl;
 	cout << "fptw "   << info << " = " << std::hex << fpenvptr->fptw << endl;
 	cout << "fpip "   << info << " = " << std::hex << fpenvptr->fpip << endl;
 	cout << "fip cs " << info << " = " << std::hex << fpenvptr->fip_cs << endl;
 	cout << "fp_op "  << info << " = " << std::hex << fpenvptr->fp_op << endl;
 	cout << "fpdp "   << info << " = " << std::hex << fpenvptr->fpdp << endl;
-	cout << "fip ds " << info << " = " << std::hex << fpenvptr->fip_ds << endl;*/
+	cout << "fip ds " << info << " = " << std::hex << fpenvptr->fip_ds << endl;
 
   	for( int i = 0; i < 8; ++i )
 	{

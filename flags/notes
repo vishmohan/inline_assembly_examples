@@ -1,0 +1,42 @@
+
+Six status Flags:
+Carry Flag, Overflow flag, Zero Flag, Auxilary Carry, Parity Flag , Sign Flag
+
+
+1. CF is set when an operation on unsigned numbers produces a result out of range 
+   (overflow or underflow).
+	x86 conditional jumps: jc -> jump if carry, jnc - jump no carry
+
+2. OF is set when an operation on signed numbers produces a result out of range 
+   (overflow or underflow).
+   x86 conditional jumps: jo -> jump if overflow, jno - jump no overflow
+
+Unsigned range of numbers
+=========================
+#	Bits		Range
+-------------------------
+1	8          0 to 255 			=> min: 0, max: 2^8 - 1
+2	16		   0 to 65535			=> min: 0, max: 2^16 - 1
+3   32		   0 to 4294967295		=> min: 0, max: 2^32 - 1
+
+
+
+signed range of numbers
+=========================
+
+#	Bits		Range
+-------------------------
+1	8         -128        to 127 		=> min: -2^7, max:  2^7 - 1
+2	16		  -32768      to 32767	    => min: -2^15, max: 2^15 - 1
+3   32		  -2147483648 to 2147483647	=> min: -2^31, max: 2^31 - 1
+
+
+3. ZF is set when the result of an operation is equal to 0. (x86 conditional jumps: jz, jnz)
+
+4. AF is set when there is a carry out from bit3 to the next nibble. (mainly used for bcd arithmetic).
+
+5. PF is set when the lowest byte of the result has even number of 1s. (least significant byte alone is considered).
+	(x86 conditional jumps: jp, jnp)
+
+6. SF is set when the result of an operation is negative. (msb of the result is 1 if the result is -ve)
+	(x86 conditional jumps: js, jns )
