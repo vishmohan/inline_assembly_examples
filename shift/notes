@@ -1,0 +1,82 @@
+															Shift
+													_ _ _ _ _ |_ _ _ _ _
+												  |						 |
+											Logical Shift				Arithmetic Shift	
+
+											 1. shr	--> shift Right  <-- 1. sar 
+											 2. shl	--> shift Left   <-- 2. sal 
+
+Typical usage in programs
+==========================
+Multiplication by two   -> shift left  by 1
+Integer Division by two -> shift right by 1
+
+
+1. logical left shift (shl) /  arith left shift (sal)
+
+Input: 0xdeadbeef -> 32 bit value
+
+				3322222222221111111111
+			CF	10987654321098765432109876543210
+			0   11011110101011011011111011101111  --> 0xdeadbeef
+
+shl <0xdeadbeef>, 1 (operand typically in register or memory)
+
+				3322222222221111111111
+			CF	10987654321098765432109876543210
+			1   10111101010110110111110111011110  --> 0xbd5b7dde
+												|_ _ 0 shifted into the vacant bit    
+
+shl <0xbd5b7dde>, 1 (operand typically in register or memory)
+
+				3322222222221111111111
+			CF	10987654321098765432109876543210
+			1   01111010101101101111101110111100  --> 0x7ab6fbbc
+												|_ _ 0 shifted into the vacant bit    
+
+2. Logical Right shift (shr)
+
+Input: 0xdeadbeef -> 32 bit value 
+
+				3322222222221111111111
+				10987654321098765432109876543210 CF
+			    11011110101011011011111011101111  0  --> 0xdeadbeef
+
+shr <0xdeadbeef>, 1 (operand typically in register or memory)
+
+				3322222222221111111111
+				10987654321098765432109876543210 CF
+			    01101111010101101101111101110111  1      --> 0x6f56df77
+				|--> 0 shifted into the vacant bit
+
+
+
+3. Arithmetic Right shift (sar)
+
+Input: 0xdeadbeef -> 32 bit value
+
+				3322222222221111111111
+				10987654321098765432109876543210 CF
+			    11011110101011011011111011101111  0  --> 0xdeadbeef
+
+sar <0xdeadbeef>, 1 (operand typically in register or memory)
+
+				3322222222221111111111
+				10987654321098765432109876543210 CF
+			    11101111010101101101111101110111  1      --> 0xef56df77
+				|--> sign bit replicated in the vacant bit
+
+
+
+Flags Affected
+==============
+1. CF is affected as shown in the examples above.
+2. SF, ZF, and PF are also set according to the result.
+3. AF - Undefined for non-zero shift count. (unchanged for 0 shift count).
+4. OF: affected only on 1-bit shifts
+   Left shift: OF = (cf == msb of result) ? 0 : 1
+   Right shift(logical) : OF = msb of operand
+   Right shift(arith)   : OF = 0
+ 
+
+
