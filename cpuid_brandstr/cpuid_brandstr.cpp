@@ -29,7 +29,8 @@ Processor brand string = { 16 bytes returned by cpuid(0x8000_0002)
 */
 
 const int BRANDSTRING_SIZE = 48;
-const int NUM_ITERATIONS = 3;
+const int BRANDSTRING_SUB_SIZE = 16; //for every call we get 16 bytes of brand string
+const int NUM_ITERATIONS = 3; //BRANDSTRING_SIZE = BRANDSTRING_SUB_SIZE * NUM_ITERATIONS
 
 string process_ascii_bytes(unsigned eax, unsigned ebx, unsigned ecx, unsigned edx);
 
@@ -58,7 +59,7 @@ int main() {
 
 string process_ascii_bytes(unsigned eax, unsigned ebx, unsigned ecx, unsigned edx) {
 
-	char brand_str[BRANDSTRING_SIZE+1]{'\0'};
+	char brand_str[BRANDSTRING_SUB_SIZE+1]{'\0'};
 
 	for (unsigned i = 0; i < 4; ++i) {
 		brand_str[i]    =  ((eax>>(i*8))&(0xff)) ;
