@@ -41,6 +41,7 @@ int main() {
 	
 
 	// with m256 (256bit memory -> 4 doubles)
+    // vfmadd132pd ymm1,ymm2,m256
 	asm volatile (
 		"vzeroall\n"
 		"vmovupd %%ymm1, %0\n"
@@ -54,6 +55,7 @@ int main() {
 
 
 // with broadcast memory - avx512 version
+// vfmadd132pd ymm1,ymm2,m64bcst
 	/*asm volatile (
 		"vzeroall\n"
 		"vmovupd %%ymm1, %0\n"
